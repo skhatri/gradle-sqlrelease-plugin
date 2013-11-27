@@ -1,0 +1,18 @@
+apply plugin: 'maven'
+
+artifacts {
+    archives jar
+
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: project.repositories.nexus_repository.url) {
+                authentication(userName: System.properties['http.proxyUser'], password: System.properties['http.proxyPassword'])
+            }
+            pom.version = project.version
+            pom.artifactId = "${project.artifact}"
+        }
+    }
+}
