@@ -9,8 +9,8 @@ Usage:
 
     buildscript {
         ext.buildDeps = [
-            'com.sybase.jdbc.driver:jconn3:6.1', 
-            'org.openapps.sql:gradle-sqlrelease-plugin:1.0-SNAPSHOT'
+                'mysql:mysql-connector-java:5.1.13',
+                'com.github.skhatri:gradle-sqlrelease-plugin:1.0-SNAPSHOT'
         ]
         repositories.addAll(project.repositories)
         dependencies {
@@ -22,24 +22,25 @@ Usage:
 
 
     apply plugin: 'sqlrelease'
-    sqlrelease {
-        username = props['database.username']
-        password = props['database.password']
-        url = props['database.url']
-        driverClassName = props['database.driverClassName']
-    
+    sql {
+        username = project.ext['database.username']
+        password = project.ext['database.password']
+        url = project.ext['database.url']
+        driverClassName = project.ext['database.driverClassName']
+        dialect = 'mysql'
+
         app = 'myapp'
         testDataDir = 'src/main/database/testdata'
         includeTestData = true
-    
+
         drop.dir = 'src/main/database/init'
         drop.filePattern = '**/*.*'
-    
+
         release.dir = 'src/main/database/release'
-        release.fileExt = '.ddl'
-    
+        release.fileExt = '.sql'
+
         run.autocommit = true
-        run.delimiter = 'GO'
+        run.delimiter = ';'
     }
 
 
