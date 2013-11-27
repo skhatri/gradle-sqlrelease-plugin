@@ -56,6 +56,6 @@ Available Tasks
 Works With
 -----------
     Sybase, MySQL, Oracle
-    
-I am in the process of making version tracking script configurable for various source systems.
+
+    Simply pass dialect value of "mysql", "sybase" or "oracle". The values are case-insensitive.
 
