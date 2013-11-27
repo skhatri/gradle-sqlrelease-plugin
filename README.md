@@ -1,7 +1,7 @@
 gradle-sqlrelease-plugin
 ===========================
 
-SqlPlugin
+SqlPlugin - a simple plugin to release SQL scripts to targetted environment.
 
 
 Usage:
@@ -45,8 +45,16 @@ Usage:
 
 Available Tasks
 ---------------
-reset       ->  drops then runs release scripts
-drop        ->  drops the database objects using drop scripts
-release     ->  runs the release scripts
-showVersion ->  shows the latest version of script that is released
-initialize  ->  point where sql connection is established
+    reset       ->  drops then runs release scripts
+    drop        ->  drops the database objects using drop scripts
+    release     ->  runs the release scripts
+    showVersion ->  shows the latest version of script that is released
+    initialize  ->  point where sql connection is established
+
+
+Works With
+-----------
+    Sybase, MySQL, Oracle
+    
+I am in the process of making version tracking script configurable for various source systems.
+
