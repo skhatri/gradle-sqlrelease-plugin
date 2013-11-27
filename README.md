@@ -8,7 +8,10 @@ Usage:
 ======
 
 buildscript {
-    ext.buildDeps = ['com.sybase.jdbc.driver:jconn3:6.1', 'org.openapps.sql:gradle-sqlrelease-plugin:1.0-SNAPSHOT']
+    ext.buildDeps = [
+        'com.sybase.jdbc.driver:jconn3:6.1', 
+        'org.openapps.sql:gradle-sqlrelease-plugin:1.0-SNAPSHOT'
+    ]
     repositories.addAll(project.repositories)
     dependencies {
         project.ext.buildDeps.each {
