@@ -1,0 +1,11 @@
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply from:'artifacts.gradle'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile 'commons-pool:commons-pool:1.5.4'
+    compile 'commons-io:commons-io:2.0.1'
+    compile 'commons-dbcp:commons-dbcp:1.3'
+}
