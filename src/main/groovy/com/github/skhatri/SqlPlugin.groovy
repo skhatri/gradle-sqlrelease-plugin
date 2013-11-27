@@ -1,4 +1,4 @@
-package org.openapps.sql
+package com.github.skhatri
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project;
@@ -62,9 +62,11 @@ class SqlPlugin implements Plugin<Project> {
                 def fileExt = project.sql.release.fileExt
                 def app = project.sql.app
 
+                def dialectValue = project.sql.dialect
+                def version = QueryProvider.valueOf(dialectValue.toUpperCase())
 
                 def maxVersion = 0
-                def row = sql.firstRow 'select max(version) as version from version_info where app = ? and endtime is not null', [app]
+                def row = sql.firstRow version.getVersionSQL(), [app]
                 maxVersion = row.version
                 println "Current DB version: ${maxVersion ?: 0}"
 
@@ -102,15 +104,15 @@ class SqlPlugin implements Plugin<Project> {
                 fileList.each {
                     ext.execFile = it.fileName
                     ext.dirName = it.dirName
-                    sql.execute('BEGIN\n' +
-                            '        declare @maxid int\n' +
-                            '        select @maxid = (select coalesce(max(id), 0)+1 from version_info)\n' +
-                            '        insert into version_info(id, version, filename, app, starttime) values(@maxid, ?, ?, ?, getdate())\n' +
-                            '        END\n', [it.versionNumber, it.fileName, app])
+                    sql.execute(version.getStartSQL(), [it.versionNumber, it.fileName, app])
 
                     println "executing ${ext.execFile}"
                     runSql(project, ext.dirName, ext.execFile)
-                    sql.execute("update version_info set endtime = getdate() where app = ? and version = ? and id = (select max(id) from version_info where version=?)", [app, it.versionNumber, it.versionNumber])
+                    def updateList = [app, it.versionNumber]
+                    if(version != QueryProvider.MYSQL) {
+                        updateList << it.versionNumber
+                    }
+                    sql.execute(version.getUpdateSQL(), updateList)
                 }
             }
         }

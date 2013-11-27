@@ -1,6 +1,6 @@
-package org.openapps.sql;
+package com.github.skhatri
 
-class ReleaseExtension {
+class ExecutionExtension {
     def String delimiter = ';'
     def String keepformat = 'yes'
     def boolean autocommit = true

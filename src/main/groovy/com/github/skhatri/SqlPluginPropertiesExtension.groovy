@@ -1,4 +1,4 @@
-package org.openapps.sql;
+package com.github.skhatri
 
 class SqlPluginPropertiesExtension {
     def String username
@@ -6,6 +6,7 @@ class SqlPluginPropertiesExtension {
     def String url
     def String driverClassName
     def String app
+    def String dialect
     def String testDataDir
     def boolean includeTestData
     def ExecutionExtension run = new ExecutionExtension()

@@ -1,4 +1,4 @@
-package org.openapps.sql;
+package com.github.skhatri
 
 class DropExtension {
     def String dir = '.'
