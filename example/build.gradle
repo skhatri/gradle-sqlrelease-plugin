@@ -34,6 +34,7 @@ sql {
 
     release.dir = 'src/main/database/release'
     release.fileExt = '.sql'
+    release.outputFile = file('scripts.sql')
 
     run.autocommit = true
     run.delimiter = ';'
