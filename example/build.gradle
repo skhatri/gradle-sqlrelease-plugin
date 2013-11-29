@@ -4,6 +4,11 @@ buildscript {
             'com.github.skhatri:gradle-sqlrelease-plugin:1.0-SNAPSHOT'
     ]
     repositories.addAll(project.repositories)
+    repositories {
+        maven {
+            url 'https://oss.sonatype.org/content/groups/staging'
+        }
+    }
     dependencies {
         project.ext.buildDeps.each {
             classpath it

@@ -1,6 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'idea'
-apply from:'artifacts.gradle'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 dependencies {
     compile gradleApi()
@@ -8,4 +9,28 @@ dependencies {
     compile 'commons-pool:commons-pool:1.5.4'
     compile 'commons-io:commons-io:2.0.1'
     compile 'commons-dbcp:commons-dbcp:1.3'
+}
+
+def isReleaseVersion = !(version ==~ /(?i).*SNAPSHOT$/)
+if (isReleaseVersion) {
+    project.ext['upload.url'] = project.ext['upload.release.url']
+} else {
+    project.ext['upload.url'] = project.ext['upload.snapshot.url']
+}
+
+signing {
+    required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: project.ext['upload.url']) {
+                authentication(userName: project.ext['upload.user'], password: project.ext['upload.password'])
+            }
+            pom.version = project.version
+            pom.artifactId = "${project.artifact}"
+        }
+    }
 }

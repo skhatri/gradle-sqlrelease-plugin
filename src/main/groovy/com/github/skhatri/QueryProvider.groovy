@@ -11,8 +11,9 @@ enum QueryProvider {
     MYSQL('insert into version_info(version, filename, app, starttime) values(?, ?, ?, now())',
             'update version_info v1 set v1.endtime = now() where v1.id in (select id from ( select max(id) as id from version_info where app = ? and version = ? ) as tmp_table)'),
     ORACLE('insert into version_info(id, version, filename, app, starttime) values((select coalesce(max(id), 0) + 1), ?, ?, ?, systimestamp)',
-            'update version_info set endtime = systimestamp where app = ? and version = ? and id = (select max(id) from version_info where version=?)')
-
+            'update version_info set endtime = systimestamp where app = ? and version = ? and id = (select max(id) from version_info where version=?)'),
+    H2('insert into version_info(id, version, filename, app, starttime) values((select coalesce(max(id), 0) + 1 from version_info), ?, ?, ?, systimestamp)',
+    'update version_info set endtime = systimestamp where app = ? and version = ? and id = (select max(id) from version_info where version=?)')
 
 
     private String start

@@ -60,6 +60,8 @@ class SqlPlugin implements Plugin<Project> {
                 println 'Performing Release...'
                 def releaseDir = project.sql.release.dir
                 def fileExt = project.sql.release.fileExt
+                def output = project.sql.release.outputFile
+
                 def app = project.sql.app
 
                 def dialectValue = project.sql.dialect
@@ -79,7 +81,6 @@ class SqlPlugin implements Plugin<Project> {
                     allFiles += project.file(project.sql.testDataDir).listFiles().findAll({ !it.directory })
                 }
                 allFiles = allFiles.findAll { it.name.endsWith(fileExt) }
-
                 allFiles.each { theFile ->
                     def fileName = theFile.name
                     def matcher = fileName =~ /^([0-9]+).*/
@@ -101,6 +102,10 @@ class SqlPlugin implements Plugin<Project> {
                     }
                 })
                 println "Number of Scripts to run: ${fileList.size()}"
+                if(output) {
+                    output.withOutputStream{out->out.write(''.bytes)}
+                }
+                def tag = ''
                 fileList.each {
                     ext.execFile = it.fileName
                     ext.dirName = it.dirName
@@ -113,7 +118,12 @@ class SqlPlugin implements Plugin<Project> {
                         updateList << it.versionNumber
                     }
                     sql.execute(version.getUpdateSQL(), updateList)
+                    tag = it.versionNumber as String
+                    if(output) {
+                        output.append(new File(ext.dirName, ext.execFile).getText('utf-8').bytes)
+                    }
                 }
+                project.sql.release.tag = tag
             }
         }
 
