@@ -1,14 +1,9 @@
 buildscript {
     ext.buildDeps = [
             'mysql:mysql-connector-java:5.1.13',
-            'com.github.skhatri:gradle-sqlrelease-plugin:1.0-SNAPSHOT'
+            'com.github.skhatri:gradle-sqlrelease-plugin:1.0'
     ]
     repositories.addAll(project.repositories)
-    repositories {
-        maven {
-            url 'https://oss.sonatype.org/content/groups/staging'
-        }
-    }
     dependencies {
         project.ext.buildDeps.each {
             classpath it
