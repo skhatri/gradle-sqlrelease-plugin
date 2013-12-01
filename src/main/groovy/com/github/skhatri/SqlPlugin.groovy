@@ -3,8 +3,14 @@ package com.github.skhatri
 import org.gradle.api.Plugin
 import org.gradle.api.Project;
 
+/**
+ * Gradle SQL Plugin
+ */
 class SqlPlugin implements Plugin<Project> {
 
+    /**
+     * Helper method to run sql file
+     */
     def runSql(project, dir, filePattern) {
         project.ant.sql(
                 'driver': project.sql.driverClassName,
@@ -22,6 +28,9 @@ class SqlPlugin implements Plugin<Project> {
         }
     }
 
+    /**
+     * Exposes tasks - initialize, drop, release, reset
+     */
     void apply(Project project) {
         def sqlExtension = project.extensions.create('sql', SqlPluginPropertiesExtension)
         sqlExtension.extensions.create('drop', DropExtension)
