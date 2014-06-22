@@ -21,4 +21,5 @@ class ReleaseExtension {
      * A last script number is provided as a tag to the build for further usage
      */
     def String tag = ''
+
 }

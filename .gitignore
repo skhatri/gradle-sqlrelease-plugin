@@ -3,4 +3,5 @@
 *.ipr
 *.iws
 *.iml
+example/buildSrc
 
