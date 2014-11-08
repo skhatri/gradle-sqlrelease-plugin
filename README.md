@@ -9,6 +9,7 @@ Usage:
 
     buildscript {
         ext.buildDeps = [
+                'com.h2database:h2:1.4.182',
                 'mysql:mysql-connector-java:5.1.13',
                 'com.github.skhatri:gradle-sqlrelease-plugin:1.0-SNAPSHOT'
         ]
@@ -55,7 +56,7 @@ Available Tasks
 
 Works With
 -----------
-    Sybase, MySQL, Oracle
+    Sybase, MySQL, H2, Oracle
 
-    Simply pass dialect value of "mysql", "sybase" or "oracle". The values are case-insensitive.
+    Simply pass dialect value of "mysql", "sybase", "h2" or "oracle". The values are case-insensitive.
 
